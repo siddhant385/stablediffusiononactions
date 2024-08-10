@@ -1,0 +1,29 @@
+name: Setup Ubuntu VM stable-diffusion-ai
+
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Install Bore
+      run: |
+        wget https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz
+        tar -xzf bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz
+        chmod +x ./bore
+
+    - name: Installing Stable Diffusion web ui
+      run: |
+        git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+        cd stable-diffusion-webui
+        pip install -r requirements.txt
+        ./webui.sh
+
+    - name: Start Bore for webui
+      run: |
+        ./bore local 7860 --to bore.pub &
+        wait
