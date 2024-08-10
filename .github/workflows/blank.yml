@@ -20,7 +20,6 @@ jobs:
       run: |
         git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
         cd stable-diffusion-webui
-        pip install -r requirements.txt
         ./webui.sh --skip-torch-cuda-test
 
     - name: Start Bore for webui
